@@ -1,4 +1,3 @@
-from select import select
 import tkinter as tk
 import lettre as lt
 from tkinter import ttk
@@ -16,7 +15,7 @@ fenetre.config(width=750,height=750,bg=couleur_bg,bd=0)
 fenetre.pack()
 
 lettre_alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-
+score_joueur = {"joueur":0}
 #cadre global ou l'on va entrer les 7 lettres 
 cadre_entrer_ses_lettres = tk.LabelFrame(fenetre)
 cadre_entrer_ses_lettres.config(width=600,height=500)
@@ -24,8 +23,7 @@ cadre_valeur = tk.LabelFrame(cadre_entrer_ses_lettres,text="Entrer vos lettres i
 
 # endroit ou les valeurs sont inscrites 
 text_mot = tk.StringVar()
-text_mot.set("")
-mot_entrer = tk.Entry(cadre_entrer_ses_lettres,textvariable=text_mot)
+mot_entrer = tk.Entry(cadre_entrer_ses_lettres,textvariable="")
 
 # message d'erreur si le mot ne correspond pas totalement au condition ( pas de chiffre ni de caractère spécial et 7 lettres)
 message_erreur = tk.StringVar()
@@ -106,7 +104,7 @@ def validation_utilisateur():
             affiche_les_lettres(proposition)
             if lt.cherche_un_mot(proposition):
                 print("bravo votre mot existe")
-
+                reponse_correcte()
             else:
                 print("le mot n'existe pas")
     else:
@@ -309,11 +307,6 @@ def affiche_les_mot_possible(liste_mot):
         liste_mot_a_afficher.append(vrai_mot)
     creer_la_liste_deroulante(liste_mot_a_afficher)
     
-
-
-listeCombo = ttk.Combobox(cadre_mot_possible,values=["VALEURS"])
-
-
 #================================================================
 # crée une liste déroulante avec les mots disponible elle va ensuite les affichers en bas 
 #================================================================
@@ -324,11 +317,18 @@ def creer_la_liste_deroulante(liste):
     listeCombo.bind("<<ComboboxSelected>>", action)
     listeCombo.place(x=20,y=50)
 
-def action(event,listeCombo):
-    select = listeCombo.get()
+def action(event):
+    select = event.widget.get()
     print("vous avez sélectionné",select)
     affiche_les_lettres(select)
 
+#================================================================
+# animation si l'utilisateur a bien répondu
+#================================================================
+
+def reponse_correcte():
+    score_joueur["joueur"]+=1
+    print("le score du joueur est :",score_joueur["joueur"])
 
 
 root.mainloop()
