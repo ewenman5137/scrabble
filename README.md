@@ -32,3 +32,6 @@ Ce projet est un jeu de Scrabble interactif développé en Python utilisant `tki
 Lancez l'application en exécutant le fichier principal :
 ```sh
 python main.py
+
+![alt text](imageReponse.png)
+![alt text](image.png)
